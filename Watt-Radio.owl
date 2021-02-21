@@ -77,7 +77,7 @@ watt:CoverOf rdf:type owl:ObjectProperty ;
              rdfs:domain watt:Cover ;
              rdfs:range watt:Track ;
              rdfs:comment "refers to type of recording of track." ;
-             rdfs:label "CoverOf" .
+             rdfs:label "PlayedCoverFor" .
 
 
 ###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Creates
@@ -441,7 +441,7 @@ watt:ArtistName rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#CoverBy
 watt:CoverBy rdf:type owl:DatatypeProperty ,
                       owl:FunctionalProperty ;
-             rdfs:domain watt:Cover ;
+             rdfs:domain watt:Artist ;
              rdfs:range rdfs:Literal ;
              rdfs:comment "refers to type of recording of track." ;
              rdfs:label "CoverBy" .
