@@ -1,19 +1,1144 @@
-@prefix : <http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-74#> .
+@prefix : <http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#> .
+@prefix mo: <http://purl.org/ontology/mo/Medium> .
+@prefix bbc: <http://purl.org/ontology/po/> .
+@prefix dbo: <http://archivo.dbpedia.org/download?o=http%3A//dbpedia.org/ontology/&f=owl> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-74> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix watt: <http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44> .
 
-<http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-74> rdf:type owl:Ontology .
+<http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44> rdf:type owl:Ontology ;
+                                                                                   rdfs:label "Watt Radio" ;
+                                                                                   watt:SubmittedTo "Dr. Alasdair Gray" ;
+                                                                                   watt:SubmittedBy """Group 5
+Mohith Gowda Heggur Ramesh (H00356160)
+Pradnya Ghorpade (H00355313)
+Rosh Thomas Kurian (H00361228)"""^^rdfs:Literal ;
+                                                                                   rdfs:comment "It represents a basic music radio ontology" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#SubmittedBy
+watt:SubmittedBy rdf:type owl:AnnotationProperty ;
+                 rdfs:label "Submitted By" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#SubmittedTo
+watt:SubmittedTo rdf:type owl:AnnotationProperty ;
+                 rdfs:label "Submitted To" .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#AlbumContains
+watt:AlbumContains rdf:type owl:ObjectProperty ;
+                   owl:inverseOf watt:IsOfAlbum ;
+                   rdfs:comment "refers to tracks in an album" ;
+                   rdfs:label "AlbumContains" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#AlbumLength
+watt:AlbumLength rdf:type owl:ObjectProperty ;
+                 owl:inverseOf watt:LengthOfAlbum ;
+                 rdf:type owl:FunctionalProperty ;
+                 rdfs:domain watt:Album ;
+                 rdfs:range watt:TimeDuration ;
+                 rdfs:comment "provides details Album length."^^rdfs:Literal ;
+                 rdfs:label "AlbumLength"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#ContainsTracks
+watt:ContainsTracks rdf:type owl:ObjectProperty ;
+                    rdfs:domain watt:Album ;
+                    rdfs:range [ rdf:type owl:Restriction ;
+                                 owl:onProperty watt:ContainsTracks ;
+                                 owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                                 owl:onClass watt:Track
+                               ] ;
+                    rdfs:comment "refers to album and tracks" ;
+                    rdfs:label "ContainsTracks" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#CoverOf
+watt:CoverOf rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             owl:inverseOf watt:RemakeFrom ;
+             rdf:type owl:FunctionalProperty ,
+                      owl:AsymmetricProperty ;
+             rdfs:domain watt:Cover ;
+             rdfs:range watt:Track ;
+             rdfs:comment "refers to type of recording of track." ;
+             rdfs:label "CoverOf" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Creates
+watt:Creates rdf:type owl:ObjectProperty ;
+             owl:equivalentProperty watt:OtherTracks ;
+             owl:inverseOf watt:isCreatedBy ;
+             rdfs:domain watt:Artist ;
+             rdfs:range watt:Track ;
+             rdfs:comment "refers to artist and track" ;
+             rdfs:label "Creates" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#DirectedBy
+watt:DirectedBy rdf:type owl:ObjectProperty ;
+                owl:inverseOf watt:Directs ;
+                rdfs:comment "refers to track and its director." ;
+                rdfs:label "DirectedBy" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Directs
+watt:Directs rdf:type owl:ObjectProperty ,
+                      owl:AsymmetricProperty ;
+             rdfs:domain watt:MusicDirector ;
+             rdfs:range watt:Track ;
+             rdfs:comment "refers to music director and track." ;
+             rdfs:label "Directs" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#EngineeredBy
+watt:EngineeredBy rdf:type owl:ObjectProperty ;
+                  owl:inverseOf watt:hasEngineered ;
+                  rdf:type owl:FunctionalProperty ,
+                           owl:AsymmetricProperty ;
+                  rdfs:domain watt:Track ;
+                  rdfs:range watt:Engineer ;
+                  rdfs:comment "refers to track and music engineer." ;
+                  rdfs:label "EngineeredBy" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#GenreOf
+watt:GenreOf rdf:type owl:ObjectProperty ;
+             owl:inverseOf watt:OfGenre ;
+             rdf:type owl:FunctionalProperty ,
+                      owl:AsymmetricProperty ;
+             rdfs:domain watt:Track ;
+             rdfs:range [ rdf:type owl:Class ;
+                          owl:unionOf ( watt:HipHop
+                                        watt:RhythmAndBlues
+                                        watt:Rock
+                                      )
+                        ] ;
+             rdfs:comment "refers to the genre of track." ;
+             rdfs:label "GenreOf" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#GuestOf
+watt:GuestOf rdf:type owl:ObjectProperty ;
+             owl:inverseOf watt:HadGuest ;
+             rdf:type owl:AsymmetricProperty ;
+             rdfs:domain watt:Guest ;
+             rdfs:range [ rdf:type owl:Restriction ;
+                          owl:onProperty watt:ShowName ;
+                          owl:allValuesFrom owl:rational
+                        ] ;
+             rdfs:comment "refers to guest and show." ;
+             rdfs:label "GuestOf" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#HadGuest
+watt:HadGuest rdf:type owl:ObjectProperty ;
+              rdfs:comment "refers to show and guest." ;
+              rdfs:label "HadGuest" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#HasPlayed
+watt:HasPlayed rdf:type owl:ObjectProperty ;
+               owl:inverseOf watt:WasPlayedBy ;
+               rdfs:comment "refers to presenter and track" ;
+               rdfs:label "HasPlayed" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#HasPresented
+watt:HasPresented rdf:type owl:ObjectProperty ;
+                  owl:inverseOf watt:IsPresentedBy ;
+                  rdf:type owl:FunctionalProperty ,
+                           owl:AsymmetricProperty ;
+                  rdfs:domain watt:Presenter ;
+                  rdfs:range watt:Track ;
+                  rdfs:comment "refers to the DJ/Presenter and track." ;
+                  rdfs:label "HasPresented" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#HasShows
+watt:HasShows rdf:type owl:ObjectProperty ;
+              owl:inverseOf watt:OfType ;
+              rdf:type owl:FunctionalProperty ;
+              rdfs:comment "connects all shows that were of a particular show type"^^rdfs:Literal ;
+              rdfs:label "HasShows"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#IsOfAlbum
+watt:IsOfAlbum rdf:type owl:ObjectProperty ,
+                        owl:AsymmetricProperty ;
+               rdfs:domain watt:Track ;
+               rdfs:range watt:Album ;
+               rdfs:comment "refers to track and album" ;
+               rdfs:label "IsOfAlbum" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#IsPresentedBy
+watt:IsPresentedBy rdf:type owl:ObjectProperty ,
+                            owl:FunctionalProperty ,
+                            owl:AsymmetricProperty ;
+                   rdfs:domain watt:Track ;
+                   rdfs:range watt:Presenter ;
+                   rdfs:comment "refers to track and the DJ/Presenter." ;
+                   rdfs:label "IsPresentedBy" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#LengthOfAlbum
+watt:LengthOfAlbum rdf:type owl:ObjectProperty ,
+                            owl:FunctionalProperty ,
+                            owl:AsymmetricProperty ;
+                   rdfs:comment "provides details on the length of Album"^^rdfs:Literal ;
+                   rdfs:label "LengthOfAlbum"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#LengthOfShow
+watt:LengthOfShow rdf:type owl:ObjectProperty ;
+                  owl:inverseOf watt:ShowLength ;
+                  rdf:type owl:FunctionalProperty ,
+                           owl:AsymmetricProperty ;
+                  rdfs:comment "provides details on the length of show"^^rdfs:Literal ;
+                  rdfs:label "LengthOfShow"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#LengthOfTrack
+watt:LengthOfTrack rdf:type owl:ObjectProperty ;
+                   owl:inverseOf watt:TrackLength ;
+                   rdf:type owl:FunctionalProperty ,
+                            owl:AsymmetricProperty ;
+                   rdfs:comment "provides details on the length of Track"^^rdfs:Literal ;
+                   rdfs:label "LengthOfTrack"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#MediumUsedBy
+watt:MediumUsedBy rdf:type owl:ObjectProperty ;
+                  owl:inverseOf watt:ReleasedAs ;
+                  rdfs:comment "refers to medium used to distribute the recording." ;
+                  rdfs:label "MediumUsedBy" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#OfGenre
+watt:OfGenre rdf:type owl:ObjectProperty ;
+             rdfs:comment "refers to track with a genre." ;
+             rdfs:label "GenreHas" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#OfType
+watt:OfType rdf:type owl:ObjectProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain watt:Show ;
+            rdfs:range watt:Show ,
+                       watt:ShowType ;
+            rdfs:comment "connects show type and shows"^^rdfs:Literal ;
+            rdfs:label "OfType"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#OriginalFrom
+watt:OriginalFrom rdf:type owl:ObjectProperty ;
+                  owl:equivalentProperty watt:isCreatedBy ;
+                  rdfs:comment "refers to track recorded by the original artist." ;
+                  rdfs:label "OriginalFrom" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#OtherTracks
+watt:OtherTracks rdf:type owl:ObjectProperty ;
+                 rdfs:comment "refers to similar tracks played by artist." ;
+                 rdfs:label "OtherTracks" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#PlayedSolo
+watt:PlayedSolo rdf:type owl:ObjectProperty ;
+                owl:inverseOf watt:SoloBy ;
+                rdfs:comment "refers to artist with his solo tracks." ;
+                rdfs:label "PlayedSolo" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#ProducedBy
+watt:ProducedBy rdf:type owl:ObjectProperty ;
+                owl:inverseOf watt:Produces ;
+                rdfs:domain watt:Track ;
+                rdfs:range watt:Producer ;
+                rdfs:comment "refers to track and producer." ;
+                rdfs:label "ProducedBy" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Produces
+watt:Produces rdf:type owl:ObjectProperty ;
+              rdfs:domain watt:Producer ;
+              rdfs:range watt:Track ;
+              rdfs:comment "refers to producer and the track." ;
+              rdfs:label "Produces" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#ReleasedAs
+watt:ReleasedAs rdf:type owl:ObjectProperty ,
+                         owl:FunctionalProperty ,
+                         owl:AsymmetricProperty ;
+                rdfs:domain watt:Track ;
+                rdfs:range watt:Medium ;
+                rdfs:comment "refers to track and its released type" ;
+                rdfs:label "ReleasedAs" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#RemakeFrom
+watt:RemakeFrom rdf:type owl:ObjectProperty ;
+                rdfs:comment "refers to Remake version of the track." ;
+                rdfs:label "RemakeFrom" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#ShowLength
+watt:ShowLength rdf:type owl:ObjectProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain watt:Show ;
+                rdfs:range watt:TimeDuration ;
+                rdfs:comment "provides details Show length."^^rdfs:Literal ;
+                rdfs:label "ShowLength"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#ShowPlayed
+watt:ShowPlayed rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                owl:inverseOf watt:TrackPlayedIn ;
+                rdfs:comment "refers to tracks which is played in a show" ;
+                rdfs:label "ShowPlayed" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#ShowUsed
+watt:ShowUsed rdf:type owl:ObjectProperty ;
+              owl:inverseOf watt:UsedByShow ;
+              rdfs:domain watt:Show ;
+              rdfs:range watt:Equipments ;
+              rdfs:comment "lists all equipments used for a particular show"^^rdfs:Literal ;
+              rdfs:label "ShowUsed"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#SoloBy
+watt:SoloBy rdf:type owl:ObjectProperty ,
+                     owl:FunctionalProperty ,
+                     owl:AsymmetricProperty ;
+            rdfs:domain watt:Track ;
+            rdfs:range watt:Solo ;
+            rdfs:comment "refers to solo track played by an artist." ;
+            rdfs:label "SoloBy" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#TrackLength
+watt:TrackLength rdf:type owl:ObjectProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain watt:Track ;
+                 rdfs:range watt:TimeDuration ;
+                 rdfs:comment "provides details Track length."^^rdfs:Literal ;
+                 rdfs:label "TrackLength"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#TrackPlayedIn
+watt:TrackPlayedIn rdf:type owl:ObjectProperty ,
+                            owl:FunctionalProperty ,
+                            owl:AsymmetricProperty ;
+                   rdfs:domain watt:Track ;
+                   rdfs:range watt:Show ;
+                   rdfs:comment "refers to a track played in shows." ;
+                   rdfs:label "TrackPlayedIn" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#UsedByShow
+watt:UsedByShow rdf:type owl:ObjectProperty ;
+                rdfs:comment "connects equipments used in shows"^^rdfs:Literal ;
+                rdfs:label "UsedByShow"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#WasPlayedBy
+watt:WasPlayedBy rdf:type owl:ObjectProperty ,
+                          owl:FunctionalProperty ,
+                          owl:AsymmetricProperty ;
+                 rdfs:domain watt:Track ;
+                 rdfs:range watt:Presenter ;
+                 rdfs:comment "refers to track and presenter." ;
+                 rdfs:label "WasPlayedBy" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#WasPlayedOn
+watt:WasPlayedOn rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf owl:topObjectProperty ;
+                 rdf:type owl:FunctionalProperty ,
+                          owl:InverseFunctionalProperty ;
+                 rdfs:domain watt:Track ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty watt:WasPlayedOn ;
+                               owl:someValuesFrom watt:Date-Time
+                             ] ;
+                 rdfs:range watt:Date-Time .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#hasEngineered
+watt:hasEngineered rdf:type owl:ObjectProperty ;
+                   rdfs:comment "refers to music engineer and track." ;
+                   rdfs:label "HasEngineered" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#isCreatedBy
+watt:isCreatedBy rdf:type owl:ObjectProperty ;
+                 rdfs:domain watt:Track ;
+                 rdfs:range watt:Artist ;
+                 rdfs:comment "refers to track and artist" ;
+                 rdfs:label "IsCreatedBy" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#AlbumName
+watt:AlbumName rdf:type owl:DatatypeProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain watt:Album ;
+               rdfs:range rdfs:Literal ;
+               rdfs:comment "refers to album name" ;
+               rdfs:label "AlbumName" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#ArtistName
+watt:ArtistName rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty ;
+                rdf:type owl:FunctionalProperty ;
+                rdfs:domain watt:Artist ;
+                rdfs:range rdfs:Literal ;
+                rdfs:comment "refers to artist name" ;
+                rdfs:label "ArtistName" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#CoverBy
+watt:CoverBy rdf:type owl:DatatypeProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain watt:Cover ;
+             rdfs:range rdfs:Literal ;
+             rdfs:comment "refers to type of recording of track." ;
+             rdfs:label "CoverBy" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#DateAndTime
+watt:DateAndTime rdf:type owl:DatatypeProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain watt:DateAndTime ;
+                 rdfs:range xsd:dateTimeStamp .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#EngineerName
+watt:EngineerName rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf owl:topDataProperty ;
+                  rdf:type owl:FunctionalProperty ;
+                  rdfs:domain watt:Engineer ;
+                  rdfs:range rdfs:Literal ;
+                  rdfs:comment "refers to engineer name" ;
+                  rdfs:label "EngineerName" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#GuestName
+watt:GuestName rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdf:type owl:FunctionalProperty ;
+               rdfs:domain watt:Guest ;
+               rdfs:range rdfs:Literal ;
+               rdfs:comment "refers to guest name" ;
+               rdfs:label "GuestName" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#MusicDirectorName
+watt:MusicDirectorName rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf owl:topDataProperty ;
+                       rdf:type owl:FunctionalProperty ;
+                       rdfs:domain watt:MusicDirector ;
+                       rdfs:range rdfs:Literal ;
+                       rdfs:comment "refers to music director name" ;
+                       rdfs:label "MusicDirectorName" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#PresenerName
+watt:PresenerName rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf owl:topDataProperty ;
+                  rdf:type owl:FunctionalProperty ;
+                  rdfs:domain watt:Presenter ;
+                  rdfs:range rdfs:Literal ;
+                  rdfs:comment "refers to presenter name" ;
+                  rdfs:label "PresenterName" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#ProducerName
+watt:ProducerName rdf:type owl:DatatypeProperty ,
+                           owl:FunctionalProperty ;
+                  rdfs:domain watt:Producer ;
+                  rdfs:range rdfs:Literal ;
+                  rdfs:comment "refers to producer name" ;
+                  rdfs:label "ProducerName" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#ShowName
+watt:ShowName rdf:type owl:DatatypeProperty ,
+                       owl:FunctionalProperty ;
+              rdfs:domain watt:Show ;
+              rdfs:range rdfs:Literal ;
+              rdfs:comment "refers to show name" ;
+              rdfs:label "ShowName" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#TrackName
+watt:TrackName rdf:type owl:DatatypeProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain watt:Track ;
+               rdfs:range rdfs:Literal ;
+               rdfs:comment "refers to track name" ;
+               rdfs:label "TrackName" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#WasPlayedOn
+watt:WasPlayedOn rdf:type owl:DatatypeProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:range xsd:dateTimeStamp .
+
 
 #################################################################
 #    Classes
 #################################################################
 
-###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-74#hi
-:test rdf:type owl:Class .
+###  http://dbpedia.org/ontology/Instrument
+<http://dbpedia.org/ontology/Instrument> rdf:type owl:Class ;
+                                         owl:equivalentClass watt:Equipments .
+
+
+###  http://purl.org/dc/terms/Agent
+dcterms:Agent rdf:type owl:Class ;
+              owl:equivalentClass watt:Agent ;
+              rdfs:comment "Refers to agent class of dcterms"^^rdfs:Literal ;
+              rdfs:label "dcterms:Agent"^^rdfs:Literal .
+
+
+###  http://purl.org/ontology/mo/Medium
+mo: rdf:type owl:Class ;
+    owl:equivalentClass watt:Medium ;
+    rdfs:comment "It specifies how the Track was Produced and Distributed."^^rdfs:Literal ;
+    rdfs:label "mo:Medium"^^rdfs:Literal .
+
+
+###  http://purl.org/ontology/po/Programme
+bbc:Programme rdf:type owl:Class ;
+              owl:equivalentClass watt:ShowType ;
+              rdfs:label "bcc:Programme" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Agent
+watt:Agent rdf:type owl:Class ;
+           rdfs:comment "It is a redefined version of dcterms:Agent"^^rdfs:Literal ;
+           rdfs:label "Agent"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Album
+watt:Album rdf:type owl:Class ;
+           rdfs:subClassOf watt:Music ;
+           rdfs:comment "An album is a collection of two or more Tracks"^^rdfs:Literal ;
+           rdfs:label "Album"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#AlternativeRock
+watt:AlternativeRock rdf:type owl:Class ;
+                     rdfs:subClassOf watt:Genre ;
+                     owl:disjointWith watt:HeavyMetal ,
+                                      watt:HipHop ,
+                                      watt:Jazz ,
+                                      watt:LocalFolk ,
+                                      watt:Opera ,
+                                      watt:RhythmAndBlues ,
+                                      watt:Rock ,
+                                      watt:Trance ;
+                     rdfs:comment "It is a style of Track."^^rdfs:Literal ;
+                     rdfs:label "AlternativeRock"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Artist
+watt:Artist rdf:type owl:Class ;
+            rdfs:subClassOf watt:Agent ;
+            owl:disjointWith watt:Show ;
+            rdfs:comment "Persons who sings or creates Tracks."^^rdfs:Literal ;
+            rdfs:label "Artist"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#AudioEquipments
+watt:AudioEquipments rdf:type owl:Class ;
+                     rdfs:subClassOf watt:Equipments ;
+                     rdfs:comment "It is a device like CD Players, Processors etc."^^rdfs:Literal ;
+                     rdfs:label "AudioEquipments"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#BroadcastMixingConsole
+watt:BroadcastMixingConsole rdf:type owl:Class ;
+                            rdfs:subClassOf watt:Equipments ;
+                            rdfs:comment "It is a device used to mix audio from many sources and produce a single output."^^rdfs:Literal ;
+                            rdfs:label "BroadcastMixingConsole"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Call-In-Shows
+watt:Call-In-Shows rdf:type owl:Class ;
+                   rdfs:subClassOf watt:ShowType .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#ChatShows
+watt:ChatShows rdf:type owl:Class ;
+               rdfs:subClassOf watt:ShowType .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#CompactCassette
+watt:CompactCassette rdf:type owl:Class ;
+                     rdfs:subClassOf watt:Medium ;
+                     rdfs:comment "It is a type of Medium."^^rdfs:Literal ;
+                     rdfs:label "CompactCassette"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#CompactDisc
+watt:CompactDisc rdf:type owl:Class ;
+                 rdfs:subClassOf watt:Medium ;
+                 rdfs:comment "It is a type of Medium."^^rdfs:Literal ;
+                 rdfs:label "CompactDisc"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Cover
+watt:Cover rdf:type owl:Class ;
+           rdfs:subClassOf watt:MusicTypes ;
+           rdfs:comment "A Cover is a remake of original song."^^rdfs:Literal ;
+           rdfs:label "Cover"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Date-Time
+watt:Date-Time rdf:type owl:Class ;
+               rdfs:subClassOf watt:DateAndTime ;
+               rdfs:comment "provides infomation on data and time of a resource."^^rdfs:Literal ;
+               rdfs:label "Date-Time"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#DateAndTime
+watt:DateAndTime rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Engineer
+watt:Engineer rdf:type owl:Class ;
+              rdfs:subClassOf watt:Agent ;
+              rdfs:comment "Person who works with Music Recordings"^^rdfs:Literal ;
+              rdfs:label "Engineer"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#EntertainmentPrograms
+watt:EntertainmentPrograms rdf:type owl:Class ;
+                           rdfs:subClassOf watt:ShowType .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Equipments
+watt:Equipments rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Genre
+watt:Genre rdf:type owl:Class ;
+           rdfs:comment "This describes the Category of the song to which it belongs."^^rdfs:Literal ;
+           rdfs:label "Genre"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#GenreSpecific
+watt:GenreSpecific rdf:type owl:Class ;
+                   rdfs:subClassOf watt:ShowType .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Guest
+watt:Guest rdf:type owl:Class ;
+           rdfs:subClassOf watt:Agent ;
+           rdfs:comment "Person who is a Guest for a Show."^^rdfs:Literal ;
+           rdfs:label "Guest"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#HeavyMetal
+watt:HeavyMetal rdf:type owl:Class ;
+                rdfs:subClassOf watt:Genre ;
+                owl:disjointWith watt:HipHop ,
+                                 watt:Jazz ,
+                                 watt:LocalFolk ,
+                                 watt:Opera ,
+                                 watt:RhythmAndBlues ,
+                                 watt:Rock ,
+                                 watt:Trance ;
+                rdfs:comment "It is a style of Track."^^rdfs:Literal ;
+                rdfs:label "HeavyMetal"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#HipHop
+watt:HipHop rdf:type owl:Class ;
+            rdfs:subClassOf watt:Genre ;
+            owl:disjointWith watt:Jazz ,
+                             watt:LocalFolk ,
+                             watt:Opera ,
+                             watt:RhythmAndBlues ,
+                             watt:Rock ,
+                             watt:Trance .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Jazz
+watt:Jazz rdf:type owl:Class ;
+          rdfs:subClassOf watt:Genre ;
+          owl:disjointWith watt:LocalFolk ,
+                           watt:Opera ,
+                           watt:RhythmAndBlues ,
+                           watt:Rock ,
+                           watt:Trance ;
+          rdfs:comment "It is a style of Track."^^rdfs:Literal ;
+          rdfs:label "Jazz"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#LateNight
+watt:LateNight rdf:type owl:Class ;
+               rdfs:subClassOf watt:ShowType .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Live
+watt:Live rdf:type owl:Class ;
+          rdfs:subClassOf watt:MusicTypes ;
+          owl:disjointWith watt:Studio ;
+          rdfs:comment "A Live refers to a Track recorded Live."^^rdfs:Literal ;
+          rdfs:label "Live"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#LiveShows
+watt:LiveShows rdf:type owl:Class ;
+               rdfs:subClassOf watt:ShowType .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#LocalFolk
+watt:LocalFolk rdf:type owl:Class ;
+               rdfs:subClassOf watt:Genre ;
+               owl:disjointWith watt:Opera ,
+                                watt:RhythmAndBlues ,
+                                watt:Rock ,
+                                watt:Trance ;
+               rdfs:comment "It is a style of Track."^^rdfs:Literal ;
+               rdfs:label "LocalFolk"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#MP3
+watt:MP3 rdf:type owl:Class ;
+         rdfs:subClassOf watt:Medium .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Medium
+watt:Medium rdf:type owl:Class ;
+            rdfs:comment "This is a redefined class of mo:Medium and encompases the different methods of releasing a track or album."^^rdfs:Literal ;
+            rdfs:label "Medium"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Microphones
+watt:Microphones rdf:type owl:Class ;
+                 rdfs:subClassOf watt:Equipments ;
+                 rdfs:comment "It is a device used to capture sound."^^rdfs:Literal ;
+                 rdfs:label "Microphones"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#MorningWake-UpShows
+watt:MorningWake-UpShows rdf:type owl:Class ;
+                         rdfs:subClassOf watt:ShowType .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Music
+watt:Music rdf:type owl:Class ;
+           rdfs:comment "Music is a recorded sound."^^rdfs:Literal ;
+           rdfs:label "Music"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#MusicDirector
+watt:MusicDirector rdf:type owl:Class ;
+                   rdfs:subClassOf watt:Agent ;
+                   rdfs:comment "Person who directs a Track."^^rdfs:Literal ;
+                   rdfs:label "MusicDirector"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#MusicTypes
+watt:MusicTypes rdf:type owl:Class ;
+                rdfs:comment "This refers to type of Track."^^rdfs:Literal ;
+                rdfs:label "MusicTypes"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#NewsAndWeather
+watt:NewsAndWeather rdf:type owl:Class ;
+                    rdfs:subClassOf watt:ShowType .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#NonAudioPrintedFormat
+watt:NonAudioPrintedFormat rdf:type owl:Class ;
+                           rdfs:subClassOf watt:Medium ;
+                           rdfs:comment "It is a type of Medium."^^rdfs:Literal ;
+                           rdfs:label "NonAudioPrintedFormat"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Opera
+watt:Opera rdf:type owl:Class ;
+           rdfs:subClassOf watt:Genre ;
+           owl:disjointWith watt:RhythmAndBlues ,
+                            watt:Rock ,
+                            watt:Trance ;
+           rdfs:comment "It is a style of Track."^^rdfs:Literal ;
+           rdfs:label "Opera"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#PlayoutSytem
+watt:PlayoutSytem rdf:type owl:Class ;
+                  rdfs:subClassOf watt:Equipments ;
+                  rdfs:comment "It is a device used to store and play all content in the radio station."^^rdfs:Literal ;
+                  rdfs:label "PlayoutSystem"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Presenter
+watt:Presenter rdf:type owl:Class ;
+               rdfs:subClassOf watt:Agent ;
+               rdfs:comment "Person who presents a Music Shows on the radio. This Mainly refers to DJ"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Producer
+watt:Producer rdf:type owl:Class ;
+              rdfs:subClassOf watt:Agent ;
+              rdfs:comment "Pereson who sponsers or fund create a music."^^rdfs:Literal ;
+              rdfs:label "Producer"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#RadioDramas
+watt:RadioDramas rdf:type owl:Class ;
+                 rdfs:subClassOf watt:ShowType .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#RhythmAndBlues
+watt:RhythmAndBlues rdf:type owl:Class ;
+                    rdfs:subClassOf watt:Genre ;
+                    owl:disjointWith watt:Rock ,
+                                     watt:Trance ;
+                    rdfs:comment "It is a style of Track."^^rdfs:Literal ;
+                    rdfs:label "RhythmAndBlues"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Rock
+watt:Rock rdf:type owl:Class ;
+          rdfs:subClassOf watt:Genre ;
+          owl:disjointWith watt:Trance ;
+          rdfs:comment "It is a style of Track."^^rdfs:Literal ;
+          rdfs:label "Rock"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Show
+watt:Show rdf:type owl:Class ;
+          rdfs:subClassOf watt:Music ;
+          rdfs:comment "Show refers to a Radio Musical Show"^^rdfs:Literal ;
+          rdfs:label "Show"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#ShowType
+watt:ShowType rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Solo
+watt:Solo rdf:type owl:Class ;
+          rdfs:subClassOf watt:MusicTypes ;
+          rdfs:comment "A Solo is a recording done by a single artist."^^rdfs:Literal ;
+          rdfs:label "Solo"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#SpeakersAndHeadphones
+watt:SpeakersAndHeadphones rdf:type owl:Class ;
+                           rdfs:subClassOf watt:Equipments ;
+                           rdfs:comment "It is a device used to hear the audio content and your own voice."^^rdfs:Literal ;
+                           rdfs:label "SpeakersAndHeadphones"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#SpecialtyShows
+watt:SpecialtyShows rdf:type owl:Class ;
+                    rdfs:subClassOf watt:ShowType .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Studio
+watt:Studio rdf:type owl:Class ;
+            rdfs:subClassOf watt:MusicTypes ;
+            rdfs:comment "A Studio refers to recording done at Studio."^^rdfs:Literal ;
+            rdfs:label "Studio"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#StudioSignage
+watt:StudioSignage rdf:type owl:Class ;
+                   rdfs:subClassOf watt:Equipments ;
+                   rdfs:comment "It is a device used in presenting live shows."^^rdfs:Literal ;
+                   rdfs:label "StudioSignage"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#TalkRadio
+watt:TalkRadio rdf:type owl:Class ;
+               rdfs:subClassOf watt:ShowType .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#TelephoneOptions
+watt:TelephoneOptions rdf:type owl:Class ;
+                      rdfs:subClassOf watt:Equipments ;
+                      rdfs:comment "It is a device used to interact with the listeners"^^rdfs:Literal ;
+                      rdfs:label "TelephoneOpttions"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#TimeDuration
+watt:TimeDuration rdf:type owl:Class ;
+                  rdfs:subClassOf watt:DateAndTime ;
+                  rdfs:comment "Provides infomation on Time duration of a resource."^^rdfs:Literal ;
+                  rdfs:label "TimeDuration"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#TracTape
+watt:TracTape rdf:type owl:Class ;
+              rdfs:subClassOf watt:Medium ;
+              rdfs:comment "It is a type of Medium."^^rdfs:Literal ;
+              rdfs:label "TracTape"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Track
+watt:Track rdf:type owl:Class ;
+           rdfs:subClassOf watt:Music ;
+           rdfs:comment "Track is a single music recording."^^rdfs:Literal ;
+           rdfs:label "Track"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Trance
+watt:Trance rdf:type owl:Class ;
+            rdfs:subClassOf watt:Genre ;
+            rdfs:comment "It is a style of Track."^^rdfs:Literal ;
+            rdfs:label "Trance"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#VinylRecords
+watt:VinylRecords rdf:type owl:Class ;
+                  rdfs:subClassOf watt:Medium ;
+                  rdfs:comment "It is a type of Medium."^^rdfs:Literal ;
+                  rdfs:label "VinylRecords"^^rdfs:Literal .
+
+
+###  http://www.w3.org/2006/time#description
+time:description rdf:type owl:Class ;
+                 rdfs:label "time:Date-Time description"^^rdfs:Literal .
+
+
+###  http://www.w3.org/2006/time#duration
+time:duration rdf:type owl:Class ;
+              rdfs:label "time:Time duration"^^rdfs:Literal .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#
+watt: rdf:type owl:NamedIndividual ;
+      watt:LengthOfAlbum watt:Ready_To_Die ;
+      watt:LengthOfShow watt:TheFirstShow ;
+      watt:LengthOfTrack watt:Big_Poppa ;
+      watt:DateAndTime "2021-02-04T15:45:00+00:00"^^xsd:dateTimeStamp ;
+      rdfs:comment "Duration of the Show"^^rdfs:Literal ,
+                   "Time duration of the album."^^rdfs:Literal ,
+                   "Time duration of the track."^^rdfs:Literal ,
+                   "it is Date and Time stamp of the track played."^^rdfs:Literal ;
+      rdfs:label "01:00:00"^^rdfs:Literal ,
+                 "06:00"^^rdfs:Literal ,
+                 "12:00"^^rdfs:Literal ,
+                 "2021-02-04T15:45:00+00:00"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#A400-Mixer
+watt:A400-Mixer rdf:type owl:NamedIndividual ;
+                watt:UsedByShow watt:TheFirstShow ;
+                rdfs:comment "It is a type of Equipment used in Radio Show for Mixing Audio."^^rdfs:Literal ;
+                rdfs:label "A400-Mixer"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Andre_Perry
+watt:Andre_Perry rdf:type owl:NamedIndividual ,
+                          watt:Engineer ;
+                 rdfs:comment "is an Music Engineer"^^rdfs:Literal ;
+                 rdfs:label "Andre Perry"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Big_Poppa
+watt:Big_Poppa rdf:type owl:NamedIndividual ;
+               owl:sameAs watt:Juicy ;
+               rdfs:comment "is a Track."^^rdfs:Literal ;
+               rdfs:label "Big Poppa"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Bluez_Brothers
+watt:Bluez_Brothers rdf:type owl:NamedIndividual ;
+                    owl:sameAs watt:Mr._Cee ;
+                    rdfs:comment "is Producers"^^rdfs:Literal ;
+                    rdfs:label "Bluez Brothers"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Calvin_Harris
+watt:Calvin_Harris rdf:type owl:NamedIndividual ;
+                   rdfs:comment "is a Presenter/DJ"^^rdfs:Literal ;
+                   rdfs:label "Calvin Harris"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#HipHop
+watt:HipHop rdf:type owl:NamedIndividual ;
+            watt:OfGenre watt:Big_Poppa .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Juicy
+watt:Juicy rdf:type owl:NamedIndividual ,
+                    watt:Track ;
+           watt:EngineeredBy watt:Andre_Perry ;
+           watt:ReleasedAs watt:MP3 ;
+           watt:SoloBy watt:The_Notorious_B.I.G ;
+           watt:TrackLength watt: ;
+           watt:WasPlayedBy watt:Calvin_Harris ;
+           watt:WasPlayedOn watt: ;
+           rdfs:comment "is a Track"^^rdfs:Literal ;
+           rdfs:label "Juicy"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Kristina
+watt:Kristina rdf:type owl:NamedIndividual ;
+              rdfs:comment "is a Guest"^^rdfs:Literal ;
+              rdfs:label "Kristina"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#LateNight
+watt:LateNight rdf:type owl:NamedIndividual ;
+               watt:HasShows watt:TheFirstShow .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#MP3
+watt:MP3 rdf:type owl:NamedIndividual ,
+                  watt:MP3 .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Maria
+watt:Maria rdf:type owl:NamedIndividual ;
+           watt:Directs watt:Juicy ;
+           rdfs:comment "is a Music Direcor"^^rdfs:Literal ;
+           rdfs:label "Maria"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Mindless_Self_Indulgence
+watt:Mindless_Self_Indulgence rdf:type owl:NamedIndividual ;
+                              watt:CoverOf watt:Big_Poppa ;
+                              watt:CoverBy "Mindless_Self_Indulgence"^^rdfs:Literal ;
+                              rdfs:comment "is a remake artist."^^rdfs:Literal ;
+                              rdfs:label "Mindless Self Indulgence"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Mr._Cee
+watt:Mr._Cee rdf:type owl:NamedIndividual ,
+                      watt:Producer ;
+             watt:Produces watt:Big_Poppa ;
+             rdfs:comment "is a Producer" ;
+             rdfs:label "Mr. Cee"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Ready_To_Die
+watt:Ready_To_Die rdf:type owl:NamedIndividual ,
+                           watt:Album ;
+                  watt:AlbumContains watt:Juicy ;
+                  rdfs:comment "is an Album"^^rdfs:Literal ;
+                  rdfs:label "Ready To Die"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#TheFirstShow
+watt:TheFirstShow rdf:type owl:NamedIndividual ,
+                           watt:Show ;
+                  watt:HadGuest watt:Kristina ;
+                  watt:IsPresentedBy watt:Calvin_Harris ;
+                  watt:ShowPlayed watt:Big_Poppa ;
+                  rdfs:comment "is a show held at Watt Radio"^^rdfs:Literal ;
+                  rdfs:label "TheFirst"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#The_Notorious_B.I.G
+watt:The_Notorious_B.I.G rdf:type owl:NamedIndividual ,
+                                  watt:Artist ;
+                         watt:Creates watt:Big_Poppa ;
+                         rdfs:comment "is an Artist" ;
+                         rdfs:label "The Notorious B.I.G"^^rdfs:Literal .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+watt:DateAndTime rdfs:label "DateAndTime"^^rdfs:Literal ;
+                 rdfs:comment "It refers to Date and Time."^^rdfs:Literal .
+
+
+watt:HipHop rdfs:comment "It is a style of Track."^^rdfs:Literal ;
+            rdfs:label "HipHop"^^rdfs:Literal .
+
+
+watt:LateNight rdfs:comment "It is a individual of subclass ShowType."^^rdfs:Literal ;
+               rdfs:label "LateNight"^^rdfs:Literal .
+
+
+watt:MP3 rdfs:label "MP3"^^rdfs:Literal ;
+         rdfs:comment "It is a type of Medium."^^rdfs:Literal .
+
+
+watt:WasPlayedOn rdfs:label "WasPlayedOn" ;
+                 rdfs:comment "refers to track and date and time it was played" .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( watt:AudioEquipments
+                watt:BroadcastMixingConsole
+                watt:Microphones
+                watt:PlayoutSytem
+                watt:SpeakersAndHeadphones
+                watt:StudioSignage
+                watt:TelephoneOptions
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( watt:Call-In-Shows
+                watt:ChatShows
+                watt:EntertainmentPrograms
+                watt:GenreSpecific
+                watt:LateNight
+                watt:LiveShows
+                watt:MorningWake-UpShows
+                watt:NewsAndWeather
+                watt:RadioDramas
+                watt:SpecialtyShows
+                watt:TalkRadio
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( watt:CompactCassette
+                watt:CompactDisc
+                watt:MP3
+                watt:NonAudioPrintedFormat
+                watt:TracTape
+                watt:VinylRecords
+              )
+] .
 
 
 ###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi
