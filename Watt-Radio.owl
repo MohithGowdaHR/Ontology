@@ -188,9 +188,9 @@ watt:IsOfAlbum rdf:type owl:ObjectProperty ,
 
 
 ###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#IsPresentedBy
-watt:IsPresentedBy rdf:type owl:ObjectProperty ,
-                            owl:FunctionalProperty ,
-                            owl:AsymmetricProperty ;
+watt:IsPresentedBy rdf:type owl:ObjectProperty ;
+                   owl:equivalentProperty watt:WasPlayedBy ;
+                   rdf:type owl:FunctionalProperty ;
                    rdfs:domain watt:Track ;
                    rdfs:range watt:Presenter ;
                    rdfs:comment "refers to track and the DJ/Presenter." ;
@@ -210,6 +210,8 @@ watt:LengthOfShow rdf:type owl:ObjectProperty ;
                   owl:inverseOf watt:ShowLength ;
                   rdf:type owl:FunctionalProperty ,
                            owl:AsymmetricProperty ;
+                  rdfs:domain watt:TimeDuration ;
+                  rdfs:range watt:Show ;
                   rdfs:comment "provides details on the length of show"^^rdfs:Literal ;
                   rdfs:label "LengthOfShow"^^rdfs:Literal .
 
@@ -219,6 +221,8 @@ watt:LengthOfTrack rdf:type owl:ObjectProperty ;
                    owl:inverseOf watt:TrackLength ;
                    rdf:type owl:FunctionalProperty ,
                             owl:AsymmetricProperty ;
+                   rdfs:domain watt:TimeDuration ;
+                   rdfs:range watt:Track ;
                    rdfs:comment "provides details on the length of Track"^^rdfs:Literal ;
                    rdfs:label "LengthOfTrack"^^rdfs:Literal .
 
@@ -266,6 +270,11 @@ watt:PlayedSolo rdf:type owl:ObjectProperty ;
                 rdfs:label "PlayedSolo" .
 
 
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#PresentedShow
+watt:PresentedShow rdf:type owl:ObjectProperty ;
+                   owl:inverseOf watt:ShowPresentedBy .
+
+
 ###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#ProducedBy
 watt:ProducedBy rdf:type owl:ObjectProperty ;
                 owl:inverseOf watt:Produces ;
@@ -301,7 +310,8 @@ watt:RemakeFrom rdf:type owl:ObjectProperty ;
 
 ###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#ShowLength
 watt:ShowLength rdf:type owl:ObjectProperty ,
-                         owl:FunctionalProperty ;
+                         owl:FunctionalProperty ,
+                         owl:AsymmetricProperty ;
                 rdfs:domain watt:Show ;
                 rdfs:range watt:TimeDuration ;
                 rdfs:comment "provides details Show length."^^rdfs:Literal ;
@@ -314,6 +324,14 @@ watt:ShowPlayed rdf:type owl:ObjectProperty ;
                 owl:inverseOf watt:TrackPlayedIn ;
                 rdfs:comment "refers to tracks which is played in a show" ;
                 rdfs:label "ShowPlayed" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#ShowPresentedBy
+watt:ShowPresentedBy rdf:type owl:ObjectProperty ,
+                              owl:FunctionalProperty ,
+                              owl:AsymmetricProperty ;
+                     rdfs:domain watt:Show ;
+                     rdfs:range watt:Presenter .
 
 
 ###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#ShowUsed
@@ -432,7 +450,7 @@ watt:CoverBy rdf:type owl:DatatypeProperty ,
 ###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#DateAndTime
 watt:DateAndTime rdf:type owl:DatatypeProperty ,
                           owl:FunctionalProperty ;
-                 rdfs:domain watt:DateAndTime ;
+                 rdfs:domain watt:Date-Time ;
                  rdfs:range xsd:dateTimeStamp .
 
 
@@ -944,17 +962,8 @@ time:duration rdf:type owl:Class ;
 ###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#
 watt: rdf:type owl:NamedIndividual ;
       watt:LengthOfAlbum watt:Ready_To_Die ;
-      watt:LengthOfShow watt:TheFirstShow ;
-      watt:LengthOfTrack watt:Big_Poppa ;
-      watt:DateAndTime "2021-02-04T15:45:00+00:00"^^xsd:dateTimeStamp ;
-      rdfs:comment "Duration of the Show"^^rdfs:Literal ,
-                   "Time duration of the album."^^rdfs:Literal ,
-                   "Time duration of the track."^^rdfs:Literal ,
-                   "it is Date and Time stamp of the track played."^^rdfs:Literal ;
-      rdfs:label "01:00:00"^^rdfs:Literal ,
-                 "06:00"^^rdfs:Literal ,
-                 "12:00"^^rdfs:Literal ,
-                 "2021-02-04T15:45:00+00:00"^^rdfs:Literal .
+      rdfs:comment "this is the length of Album Ready To Die" ;
+      rdfs:label "\"12:00 min\""^^rdfs:Literal .
 
 
 ###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#A400-Mixer
@@ -1002,9 +1011,8 @@ watt:Juicy rdf:type owl:NamedIndividual ,
            watt:EngineeredBy watt:Andre_Perry ;
            watt:ReleasedAs watt:MP3 ;
            watt:SoloBy watt:The_Notorious_B.I.G ;
-           watt:TrackLength watt: ;
            watt:WasPlayedBy watt:Calvin_Harris ;
-           watt:WasPlayedOn watt: ;
+           watt:WasPlayedOn watt:Z ;
            rdfs:comment "is a Track"^^rdfs:Literal ;
            rdfs:label "Juicy"^^rdfs:Literal .
 
@@ -1060,8 +1068,8 @@ watt:Ready_To_Die rdf:type owl:NamedIndividual ,
 watt:TheFirstShow rdf:type owl:NamedIndividual ,
                            watt:Show ;
                   watt:HadGuest watt:Kristina ;
-                  watt:IsPresentedBy watt:Calvin_Harris ;
                   watt:ShowPlayed watt:Big_Poppa ;
+                  watt:ShowPresentedBy watt:Calvin_Harris ;
                   rdfs:comment "is a show held at Watt Radio"^^rdfs:Literal ;
                   rdfs:label "TheFirst"^^rdfs:Literal .
 
@@ -1072,6 +1080,27 @@ watt:The_Notorious_B.I.G rdf:type owl:NamedIndividual ,
                          watt:Creates watt:Big_Poppa ;
                          rdfs:comment "is an Artist" ;
                          rdfs:label "The Notorious B.I.G"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#Z
+watt:Z rdf:type owl:NamedIndividual ;
+       watt:DateAndTime "2004-04-12T13:20:00Z"^^xsd:dateTimeStamp ;
+       rdfs:comment "Date which the track was played"^^rdfs:Literal ;
+       rdfs:label "2021-02-21T15:20:00Z"^^rdfs:Literal .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#_Hr
+watt:_Hr rdf:type owl:NamedIndividual ;
+         watt:LengthOfShow watt:TheFirstShow ;
+         rdfs:comment "Time Duration of the show TheFirst" ;
+         rdfs:label "\"01:00:00 Hr\"" .
+
+
+###  http://www.semanticweb.org/mohithgowdahr/ontologies/2021/1/untitled-ontology-44#_min
+watt:_min rdf:type owl:NamedIndividual ;
+          watt:LengthOfTrack watt:Juicy ;
+          rdfs:comment "Length of tracks Big Poppa and Juicy" ;
+          rdfs:label "\"06:00 min\"" .
 
 
 #################################################################
